@@ -161,7 +161,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     public function setPositionOrder($dir = self::SORT_ORDER_ASC, $sortAlpha = false)
     {
-        $this->setOrder('main_table.sort_order', $dir);
         // sort alphabetically by values in admin
         if ($sortAlpha) {
             $this->getSelect()->joinLeft(
@@ -170,6 +169,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
                 ['value']
             );
             $this->setOrder('sort_alpha_value.value', $dir);
+        } else {
+            $this->setOrder('main_table.sort_order', $dir);
         }
 
         return $this;
